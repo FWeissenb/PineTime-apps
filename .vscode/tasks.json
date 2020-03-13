@@ -1,0 +1,116 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            //  Build the Application.
+            "label": "1️⃣ Build Application",
+            "type": "shell",
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    " scripts\\build-app.cmd && copy .vscode/launch-nrf52.json .vscode/launch.json && echo ✅ ◾ ️Done! "
+                ]
+            },
+            "osx": {
+                "command": "bash",
+                "args": [
+                    "-c", "-l",
+                    " scripts/build-app.sh && cp .vscode/launch-nrf52.json .vscode/launch.json && echo ✅ ◾ ️Done! "
+                ],
+            },
+            "linux": {
+                "command": "bash",
+                "args": [
+                    "-c", "-l",
+                    " scripts/build-app.sh && echo ✅ ◾ ️Done! "
+                ],
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [ 
+                {
+                    //  Problem matcher for GNU Linker, e.g. /Users/Luppy/mynewt/stm32bluepill-mynewt-sensor/apps/my_sensor_app/src/ATParser.h:82: undefined reference to `operator delete[](void*)'
+                    "fileLocation": [ "absolute" ],
+                    "pattern": {
+                        "regexp": "^(/.*):(\\d+):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "message": 3,
+                        // "code": 3,
+                        // "severity": 4,
+                    }                    
+                }
+            ],
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            //  Flash the Application.  We use custom scripts instead of "newt load" because "newt" runs in Ubuntu while the ST Link driver runs under Windows.
+            "label": "2️⃣ Flash Application",
+            "type": "shell",
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    " scripts\\nrf52\\flash-app.cmd && echo ✅ ◾ ️Done! "
+                ]
+            },
+            "osx": {
+                // Previously: " newt load -v bluepill_my_sensor && echo '**** Done!' "
+                "command": "bash",
+                "args": [
+                    "-c", "-l",
+                    " scripts/nrf52/flash-app.sh && echo ✅ ◾ ️Done! "
+                ],
+            },
+            "linux": {
+                // Previously: " newt load -v bluepill_my_sensor && echo '**** Done!' "
+                "command": "bash",
+                "args": [
+                    "-c", "-l",
+                    " scripts/nrf52/flash-app.sh && echo ✅ ◾ ️Done! "
+                ],
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            //  Generate documentation.
+            "label": "📖 Generate Doc",
+            "type": "shell",
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/c",
+                    " cargo doc --document-private-items && echo ✅ ◾ ️Done! target/thumbv7em-none-eabihf/doc "
+                ]
+            },
+            "osx": {
+                "command": "bash",
+                "args": [
+                    "-c", "-l",
+                    " set -e -x ; rustdoc --output docs/articles --html-in-header scripts/rustdoc-header.html --html-before-content scripts/rustdoc-before.html rust/app/src/watch_face.md ; exit ; cargo doc --document-private-items ; echo ✅ ◾ ️Done! target/thumbv7em-none-eabihf/doc "
+                ]
+            },
+            "linux": {
+                "command": "bash",
+                "args": [
+                    "-c", "-l",
+                    " set -e -x ; cargo doc --document-private-items ; echo ✅ ◾ ️Done! target/thumbv7em-none-eabihf/doc "
+                ]
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            }
+        },
+    ]
+}

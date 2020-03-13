@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		//"cortex-debug.openocdPath": ~/.local/bin/openocd,
+		"git.ignoreLimitWarning": true
+	}
+
+}
