@@ -63,7 +63,18 @@ function build_riot() {
     local build_app=$1     # RIOT OS app to be built e.g. apps/pinetime
     set -x  #  Echo commands
     pushd apps/$build_app
+    rm -f PineTime.S
     make -s --jobs=10  # --trace
+    popd
+    set +x  #  Stop echo
+}
+
+function dump_assembly_code() {
+    #  Build the RIOT OS application
+    local build_app=$1     # RIOT OS app to be built e.g. apps/pinetime
+    set -x  #  Echo commands
+    pushd apps/$build_app
+    arm-none-eabi-objdump -t -S --demangle --line-numbers --wide bin/pinetime/PineTime.elf >PineTime.S 2>&1
     popd
     set +x  #  Stop echo
 }
@@ -182,7 +193,7 @@ done
 #  Run the RIOT OS build, which will link with the Rust app, Rust libraries and libcore.
 echo ; echo "----- Build RIOT OS and link with Rust app" 
 build_riot $build_app
-
+dump_assembly_code $build_app
 #  TODO: Show the firmware size
 set -x
 #set +e  # Ignore errors

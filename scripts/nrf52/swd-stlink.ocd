@@ -7,7 +7,7 @@ add_script_search_dir openocd/scripts
 source [find scripts/nrf52/flash-init.ocd]
 
 # Select the ST-Link v2 interface (SWD transport)
-source [find interface/stlink.cfg]
+source [find interface/stlink-v2.cfg]
 transport select hla_swd
 
 # Select nRF52 as target

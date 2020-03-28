@@ -11,7 +11,7 @@
                 "command": "cmd",
                 "args": [
                     "/c",
-                    " scripts\\build-app.cmd && copy .vscode/launch-nrf52.json .vscode/launch.json && echo ✅ ◾ ️Done! "
+                    " scripts\\build-app.cmd && echo ✅ ◾ ️Done windows! "
                 ]
             },
             "osx": {
@@ -76,36 +76,6 @@
                     "-c", "-l",
                     " scripts/nrf52/flash-app.sh && echo ✅ ◾ ️Done! "
                 ],
-            },
-            "problemMatcher": [],
-            "presentation": {
-                "clear": true
-            }
-        },
-        {
-            //  Generate documentation.
-            "label": "📖 Generate Doc",
-            "type": "shell",
-            "windows": {
-                "command": "cmd",
-                "args": [
-                    "/c",
-                    " cargo doc --document-private-items && echo ✅ ◾ ️Done! target/thumbv7em-none-eabihf/doc "
-                ]
-            },
-            "osx": {
-                "command": "bash",
-                "args": [
-                    "-c", "-l",
-                    " set -e -x ; rustdoc --output docs/articles --html-in-header scripts/rustdoc-header.html --html-before-content scripts/rustdoc-before.html rust/app/src/watch_face.md ; exit ; cargo doc --document-private-items ; echo ✅ ◾ ️Done! target/thumbv7em-none-eabihf/doc "
-                ]
-            },
-            "linux": {
-                "command": "bash",
-                "args": [
-                    "-c", "-l",
-                    " set -e -x ; cargo doc --document-private-items ; echo ✅ ◾ ️Done! target/thumbv7em-none-eabihf/doc "
-                ]
             },
             "problemMatcher": [],
             "presentation": {
